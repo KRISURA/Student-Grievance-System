@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
+// ✅ backend URL
+const API = "https://student-grievance-system-r0sc.onrender.com";
+
 const Register = () => {
   const [form, setForm] = useState({
     name: "",
@@ -17,7 +20,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // simple validation
     if (!form.name || !form.email || !form.password) {
       alert("All fields are required");
       return;
@@ -25,11 +27,11 @@ const Register = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/api/register", form);
+
+      const res = await axios.post(`${API}/api/register`, form);
 
       alert(res.data.msg);
 
-      // redirect to login
       window.location.href = "/login";
 
     } catch (err) {
@@ -40,37 +42,13 @@ const Register = () => {
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "linear-gradient(135deg, #667eea, #764ba2)"
-      }}
-    >
-      <div
-        style={{
-          backdropFilter: "blur(15px)",
-          background: "rgba(255,255,255,0.1)",
-          padding: "40px",
-          borderRadius: "15px",
-          width: "320px",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-          textAlign: "center"
-        }}
-      >
+    <div style={containerStyle}>
+      <div style={cardStyle}>
         <h2 style={{ color: "#fff", marginBottom: "5px" }}>
           Student Grievance Portal
         </h2>
 
-        <p
-          style={{
-            color: "#ddd",
-            fontSize: "14px",
-            marginBottom: "20px"
-          }}
-        >
+        <p style={{ color: "#ddd", fontSize: "14px", marginBottom: "20px" }}>
           Create your account to submit and track complaints
         </p>
 
@@ -107,7 +85,6 @@ const Register = () => {
           </button>
         </form>
 
-        {/* Login Link */}
         <p style={{ color: "#fff", marginTop: "15px", fontSize: "14px" }}>
           Already have an account?{" "}
           <a href="/login" style={{ color: "#ff7eb3" }}>
@@ -119,7 +96,25 @@ const Register = () => {
   );
 };
 
-// reusable styles
+// styles
+const containerStyle = {
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  background: "linear-gradient(135deg, #667eea, #764ba2)"
+};
+
+const cardStyle = {
+  backdropFilter: "blur(15px)",
+  background: "rgba(255,255,255,0.1)",
+  padding: "40px",
+  borderRadius: "15px",
+  width: "320px",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+  textAlign: "center"
+};
+
 const inputStyle = {
   width: "100%",
   padding: "12px",

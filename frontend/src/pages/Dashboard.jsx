@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+// ✅ backend URL (LIVE)
+const API = "https://student-grievance-system-r0sc.onrender.com";
+
 const Dashboard = () => {
   const [grievances, setGrievances] = useState([]);
   const [form, setForm] = useState({
@@ -14,7 +17,7 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/grievances", {
+      const res = await axios.get(`${API}/api/grievances`, {
         headers: { Authorization: token }
       });
       setGrievances(res.data);
@@ -41,7 +44,7 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/grievances", form, {
+      await axios.post(`${API}/api/grievances`, form, {
         headers: { Authorization: token }
       });
 
@@ -55,7 +58,7 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/grievances/${id}`, {
+    await axios.delete(`${API}/api/grievances/${id}`, {
       headers: { Authorization: token }
     });
     fetchData();
@@ -68,14 +71,12 @@ const Dashboard = () => {
 
   return (
     <div style={containerStyle}>
-      {/* Logout */}
       <button onClick={handleLogout} style={logoutStyle}>
         Logout
       </button>
 
-      <h2 style={titleStyle}>Student Grievance Dashboard</h2>
+      <h2 style={titleStyle}>Student Grievance Dashboard 🛠️</h2>
 
-      {/* FORM */}
       <div style={cardStyle}>
         <h3>Submit Grievance</h3>
 
@@ -114,7 +115,6 @@ const Dashboard = () => {
         </form>
       </div>
 
-      {/* LIST */}
       <div style={{ maxWidth: "800px", margin: "auto" }}>
         {grievances.length === 0 ? (
           <p style={{ color: "#fff", textAlign: "center" }}>
@@ -142,7 +142,7 @@ const Dashboard = () => {
   );
 };
 
-// styles
+// styles (same as before)
 const containerStyle = {
   minHeight: "100vh",
   background: "linear-gradient(135deg, #667eea, #764ba2)",

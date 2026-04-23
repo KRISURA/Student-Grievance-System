@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
+// ✅ backend URL
+const API = "https://student-grievance-system-r0sc.onrender.com";
+
 const Login = () => {
   const [form, setForm] = useState({
     email: "",
@@ -16,7 +19,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // validation
     if (!form.email || !form.password) {
       alert("All fields are required");
       return;
@@ -25,14 +27,12 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:5000/api/login", form);
+      const res = await axios.post(`${API}/api/login`, form);
 
-      // store token
       localStorage.setItem("token", res.data.token);
 
       alert("Login successful");
 
-      // redirect
       window.location.href = "/dashboard";
 
     } catch (err) {
@@ -77,7 +77,6 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Register link */}
         <p style={{ color: "#fff", marginTop: "15px", fontSize: "14px" }}>
           New user?{" "}
           <a href="/" style={{ color: "#667eea" }}>
@@ -89,7 +88,7 @@ const Login = () => {
   );
 };
 
-// styles
+// styles same
 const containerStyle = {
   height: "100vh",
   display: "flex",
